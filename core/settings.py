@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     # my apps
     'index',
     'about',
+    'contact',
+    'blog',
+    
 ]
 
 MIDDLEWARE = [
