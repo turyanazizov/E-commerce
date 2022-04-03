@@ -7,16 +7,8 @@
     <div class="offcanvas-menu-wrapper">
       <div class="offcanvas__option">
         <div class="offcanvas__links">
-          <a class="hover" href="{% url 'accounts:register' %}">Sign up</a>
-          <a class="hover" href="{% url 'accounts:login' %}">Sign in</a>
-        </div>
-        <div class="offcanvas__top__hover">
-          <span>Usd <i class="arrow_carrot-down"></i></span>
-          <ul>
-            <li>USD</li>
-            <li>EUR</li>
-            <li>USD</li>
-          </ul>
+          <a style="border: 2px solid #e53637; padding:5px;" class="hover" href="{% url 'accounts:login' %}">Log in</a>
+          <a style="border: 2px solid #e53637; padding:5px;" class="hover" href="{% url 'accounts:register' %}">Register</a>
         </div>
       </div>
       <div class="offcanvas__nav__option">
@@ -44,16 +36,8 @@
             <div class="col-lg-6 col-md-5">
               <div class="header__top__right">
                 <div class="header__top__links">
-                  <a class="hover" href="{% url 'accounts:register' %}">Sign up</a>
-                  <a class="hover" href="{% url 'accounts:login' %}">Sign in</a>
-                </div>
-                <div class="header__top__hover">
-                  <span>Usd <i class="arrow_carrot-down"></i></span>
-                  <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                  </ul>
+                  <a class="hover" style="border: 2px solid #e53637; padding:5px;"  href="{% url 'accounts:login' %}">Log in</a>
+                  <a class="hover" style="border: 2px solid #e53637; padding:5px;"  href="{% url 'accounts:register' %}">Register</a>
                 </div>
               </div>
             </div>
@@ -70,11 +54,11 @@
           <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
               <ul>
-                <li class=""><a href="{% url 'index:index' %}">Home</a></li>
-                <li><a href="{% url 'shop:shop' %}">Shop</a></li>
-                <li class=""><a href="{% url 'about:about' %}">About Us</a></li>
-                <li><a href="{% url 'blog:blog' %}">Blog</a></li>
-                <li><a href="{% url 'contact:contact' %}">Contact</a></li>
+                <li ><a href="{% url 'index:index' %}">Home</a></li>
+                <li ><a href="{% url 'shop:shop' %}">Shop</a></li>
+                <li ><a href="{% url 'about:about' %}">About Us</a></li>
+                <li ><a href="{% url 'blog:blog' %}">Blog</a></li>
+                <li ><a href="{% url 'contact:contact' %}">Contact</a></li>
               </ul>
             </nav>
           </div>
