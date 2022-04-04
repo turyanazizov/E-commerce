@@ -25,7 +25,7 @@ Blog Page
             <div class="blog__item__text">
               <span><img src=" {% static 'img/icon/xcalendar.png.pagespeed.ic.GXy2gYWDh7.png' %} "  alt=""> {{ blog.published_date }}</span>
               <h5>{{ blog.title }}</h5>
-              <a href="{% url 'blog:blog_detail' blog.id %}">Read More</a>
+              <a href="{{ blog.get_absolute_url }}">Read More</a>
             </div>
           </div>
         </div>
