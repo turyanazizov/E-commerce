@@ -1,6 +1,7 @@
+from email import message
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from . forms import RegistrationForm
+from . forms import LoginForm, RegistrationForm
 from django.contrib import messages
 from accounts.tasks import send_confirmation_email
 from django.utils.encoding import force_str
@@ -8,6 +9,7 @@ from django.utils.http import urlsafe_base64_decode
 from accounts.tools.tokens import account_activation_token
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, get_user_model, login as django_login, logout as django_logout
+User = get_user_model()
 
 User = get_user_model()
 
@@ -46,4 +48,21 @@ def activate(request, uidb64, token):
         return redirect(reverse_lazy('accounts:register'))
 
 def login(request):
-    return render(request,'login.html')
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(email=email, password=password)
+            if user:
+                django_login(request, user)
+                return redirect(reverse_lazy('index:index'))
+            messages.error(request, 'Your credentials are invalid')
+
+    return render(request, 'login.html', {'form': form})
+
+
+def logout(request):
+    django_logout(request)
+    return redirect(reverse_lazy('index:index'))

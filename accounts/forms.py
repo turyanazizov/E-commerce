@@ -33,3 +33,8 @@ class RegistrationForm(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
         }
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(max_length=50, widget=forms.EmailInput(attrs = {'class': 'form-control', 'placeholder': 'E-mail'}))    
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs = {'class': 'form-control', 'placeholder': 'Password'}))
