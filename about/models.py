@@ -1,7 +1,7 @@
 from django.db import models
 
 class About(models.Model):
-    image = models.ImageField(upload_to='about/', null=False, blank=False)
+    image = models.ImageField(upload_to='about/')
     title1 = models.CharField(max_length=100)
     content1 = models.TextField()
     title2 = models.CharField(max_length=100)

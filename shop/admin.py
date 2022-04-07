@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Shops
+from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 
-# Register your models here.
+admin.site.register(Shops)

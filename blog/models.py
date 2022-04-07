@@ -7,15 +7,15 @@ from django.urls import reverse_lazy
 class Blogs(models.Model):
     published_date=models.DateTimeField(auto_now_add=True)
     title=models.CharField(max_length=250)
-    image = models.ImageField(upload_to='blogs/', null=False, blank=False)
+    image = models.ImageField(upload_to='blogs/')
     # Single Blog fields
-    content1 = models.TextField(blank=False,null=False)
-    content2 = models.TextField(blank=False,null=False)
-    quote = models.TextField(blank=False,null=False)
-    quote_owner =models.CharField(max_length=100,blank=False,null=False)
-    publisher_name=models.CharField(max_length=100,blank=False,null=False)
-    publisher_img = models.ImageField(upload_to='blogs/', null=False, blank=False)
-    tags=models.CharField(max_length=100,blank=False,null=False)
+    content1 = models.TextField()
+    content2 = models.TextField()
+    quote = models.TextField()
+    quote_owner =models.CharField(max_length=100)
+    publisher_name=models.CharField(max_length=100)
+    publisher_img = models.ImageField(upload_to='blogs/')
+    tags=models.CharField(max_length=100,)
     slug=models.SlugField(max_length=255,blank=True,null=True)
     
     def get_absolute_url(self):
@@ -36,10 +36,10 @@ class Comments(models.Model):
     )
     blog = models.ForeignKey(Blogs,on_delete=models.CASCADE,blank=True,null=True,related_name='comments')
     status = models.CharField(max_length=50,choices=STATUS_CHOICES)
-    text=models.TextField(blank=False,null=False)
-    name=models.CharField(max_length=100,blank=False,null=False)
-    email=models.EmailField(blank=False,null=False)
-    phone=models.CharField(max_length=100,blank=False,null=False)
+    text=models.TextField()
+    name=models.CharField(max_length=100,)
+    email=models.EmailField()
+    phone=models.CharField(max_length=100,)
     date = models.DateTimeField(auto_now_add=True)
     
     class Meta:
