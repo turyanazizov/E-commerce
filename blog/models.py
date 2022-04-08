@@ -1,6 +1,3 @@
-from asyncore import read
-from faulthandler import disable
-from tkinter import DISABLED
 from django.db import models
 from django.urls import reverse_lazy
 
@@ -21,7 +18,6 @@ class Blogs(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('blog:blog_detail', args=[self.slug])
     
-
     class Meta:
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'

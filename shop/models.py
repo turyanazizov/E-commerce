@@ -1,42 +1,58 @@
 from django.db import models
 from multiselectfield import MultiSelectField
+from django.urls import reverse_lazy
+
+
+class Categories(models.Model):
+    category = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.category
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+
+class Brands(models.Model):
+    brand = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.brand
+
+    class Meta:
+        verbose_name = "Brand"
+        verbose_name_plural = "Brands"
 
 
 class Shops(models.Model):
-    CATEGORIES = (
-        ('1', 'Deactive'),
-        ('2', 'Active'),
-        ('3', 'Deactive'),
-        ('4', 'Active'),
-        ('5', 'Deactive'),
-        ('6', 'Active'),
-        ('7', 'Deactive'),
-        ('8', 'Active'),
-    )
-    BRANDS = (
-        ('1', 'Deactive'),
-        ('2', 'Active'),
-        ('3', 'Deactive'),
-        ('4', 'Active'),
-        ('5', 'Deactive'),
-        ('6', 'Active'),
-        ('7', 'Deactive'),
-        ('8', 'Active'),
-    )
     SIZES = (
-        ('S', 'S'),
-        ('XS', 'XS'),
-        ('M', 'M'),
-        ('L', 'L'),
-        ('XL', 'XL'),
+        ("XS", "XS"),
+        ("S", "S"),
+        ("M", "M"),
+        ("L", "L"),
+        ("XL", "XL"),
+        ("XXL", "XXL"),
+        ("3XL", "3XL"),
     )
     title = models.CharField(max_length=250)
     image = models.ImageField(upload_to="shop/")
-    price = models.IntegerField()
-    category = models.CharField(max_length=50, choices=CATEGORIES)
-    brand = models.CharField(max_length=50, choices=BRANDS)
+    image2 = models.ImageField(upload_to="shop/")
+    image3 = models.ImageField(upload_to="shop/")
+    image4 = models.ImageField(upload_to="shop/")
+    price = models.FloatField()
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brands, on_delete=models.CASCADE)
     size = MultiSelectField(choices=SIZES)
-        
-        
-    def __str__(self) :
+    sale = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse_lazy("shop:shop_detail", args=[self.slug])
+
+    def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Shop"
+        verbose_name_plural = "Shops"
