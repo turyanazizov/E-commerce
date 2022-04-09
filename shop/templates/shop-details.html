@@ -82,11 +82,9 @@ Shopping Details Page
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <div class="product__details__text">
-              <h4>{{ blog.title }}</h4>
-              <h3>$270.00 <span>70.00</span></h3>
-              <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
-                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
-                with placket.</p>
+              <h4>{{ shop.title }}</h4>
+              <h3>${{shop.price}}</h3>
+              <p>{{shop.brief_info}}</p>
               <div class="product__details__option">
                 <div class="product__details__option__size">
                   <span>Size:</span>
@@ -218,68 +216,23 @@ Shopping Details Page
         </div>
       </div>
       <div class="row">
+        {% for item in shops %}
         <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
           <div class="product__item">
-            <div class="product__item__pic set-bg" data-setbg=" {% static 'img/product/a7.jpg' %} " >
-              <span class="label">New</span>
+            <div class="product__item__pic set-bg" data-setbg=" {{item.image.url}} " >
               <ul class="product__hover">
                 <li><a href="#"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} "  alt=""></a></li>
                 <li><a href="#"><img src=" {% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %} "  alt=""></a></li>
               </ul>
             </div>
             <div class="product__item__text">
-              <h6>Piqué Biker Jacket</h6>
+              <h6>{{item.title}}</h6>
               <a href="#" class="add-cart">+ Add To Cart</a>
-              <h5>$67.24</h5>
+              <h5>${{item.price}}</h5>
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-          <div class="product__item">
-            <div class="product__item__pic set-bg" data-setbg=" {% static 'img/product/a4.jpg' %} " >
-              <ul class="product__hover">
-                <li><a href="#"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} "  alt=""></a></li>
-                <li><a href="#"><img src=" {% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %} "  alt=""></a></li>
-              </ul>
-            </div>
-            <div class="product__item__text">
-              <h6>Piqué Biker Jacket</h6>
-              <a href="#" class="add-cart">+ Add To Cart</a>
-              <h5>$67.24</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-          <div class="product__item sale">
-            <div class="product__item__pic set-bg" data-setbg=" {% static 'img/product/a3.jpg' %} " >
-              <span class="label">Sale</span>
-              <ul class="product__hover">
-                <li><a href="#"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} "  alt=""></a></li>
-                <li><a href="#"><img src=" {% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %} "  alt=""></a></li>
-              </ul>
-            </div>
-            <div class="product__item__text">
-              <h6>Multi-pocket Chest Bag</h6>
-              <a href="#" class="add-cart">+ Add To Cart</a>
-              <h5>$43.48</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-          <div class="product__item">
-            <div class="product__item__pic set-bg" data-setbg=" {% static 'img/product/a1.jpg' %} " >
-              <ul class="product__hover">
-                <li><a href="#"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} "  alt=""></a></li>
-                <li><a href="#"><img src=" {% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %} "  alt=""></a></li>
-              </ul>
-            </div>
-            <div class="product__item__text">
-              <h6>Diagonal Textured Cap</h6>
-              <a href="#" class="add-cart">+ Add To Cart</a>
-              <h5>$60.9</h5>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>

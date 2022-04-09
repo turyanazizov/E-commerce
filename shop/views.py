@@ -15,8 +15,10 @@ def shop(request):
 
 def shop_detail(request,slug):
     shop = get_object_or_404(Shops, slug=slug)
+    shops=Shops.objects.all().filter(category=shop.category).exclude(title=shop.title)
     context = {
         'shop':shop,
+        'shops':shops,
     }
     return render(request,'shop-details.html',context=context)
 

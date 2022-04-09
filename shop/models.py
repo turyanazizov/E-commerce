@@ -45,6 +45,9 @@ class Shops(models.Model):
     brand = models.ForeignKey(Brands, on_delete=models.CASCADE)
     size = MultiSelectField(choices=SIZES)
     sale = models.BooleanField(default=False)
+    brief_info = models.TextField(default='')
+    description = models.TextField(default='')
+    additional_information = models.TextField(default='')
     slug = models.SlugField(max_length=255, blank=True, null=True)
 
     def get_absolute_url(self):
