@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Shopping Cart Page
+{% endblock %}
+{% block content %}
+  <section class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__text">
+            <h4>Shopping Cart</h4>
+            <div class="breadcrumb__links">
+              <a href="{% url 'index:index' %}">Home</a>
+              <a href="{% url 'shop:shop' %}">Shop</a>
+              <span>Shopping Cart</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shopping-cart spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="shopping__cart__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in wished_shops %}
+                  {%for i in item %}
+                <tr>
+                  <td class="product__cart__item">
+                    <div class="product__cart__item__pic">
+                      <img width="90px" height="90px" style="object-fit: cover;" src=" {{i.image.url}} ">
+                    </div>
+                    <div class="product__cart__item__text">
+                      <h6>{{i.title}}</h6>
+                      <h5>{{i.price}} $</h5>
+                    </div>
+                  </td>
+                  <td class="quantity__item">
+                    <div class="quantity">
+                      <div class="pro-qty-2">
+                          <input type="submit" value="1" name="quantity">
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cart__price">{{i.price}} $</td>
+                  <td>
+                  <form method="post" >
+                    {% csrf_token %}
+                    <input type="hidden" name="shop_id" value="{{ i.id }}">
+                    <button class="cart__close" style="background-color: white;width: 36px;height: 37px;margin-bottom:5px;border-radius:16px" type="submit" ><i class="fa fa-close"></i></button>
+                  </form>
+                </td>
+                </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="continue__btn">
+                <a href="{% url 'shop:cart' %}">Continue Shopping</a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="continue__btn update__btn">
+                <a href="{% url 'shop:cart' %}"><i class="fa fa-spinner"></i> Update Wishlist</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="cart__discount">
+            <h6>Discount codes</h6>
+            <form action="#">
+              <input type="text" placeholder="Coupon code">
+              <button type="submit">Apply</button>
+            </form>
+          </div>
+          <div class="cart__total">
+            <h6>Wishlist total</h6>
+            <ul>
+              <li>Total <span>{{total}} $</span></li>
+            </ul>
+            <a href="{% url 'shop:checkout' %}" class="primary-btn">Proceed to checkout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}

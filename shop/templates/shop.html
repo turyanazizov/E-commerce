@@ -149,7 +149,11 @@ Shopping Page
               <div class="product__item">
                 <div class="product__item__pic set-bg" data-setbg=" {{shop.image.url}} " >
                   <ul class="product__hover">
-                    <li><a href="#"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} "  alt=""></a></li>
+                    <form method="post" >
+                      {% csrf_token %}
+                      <input type="hidden" name="shop_id" value="{{ shop.id }}">
+                      <button type="submit" style="background-color: white;width: 36px;height: 37px;margin-bottom:5px;border:none;"><img src=" {% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %} " ></button>
+                    </form>
                     <li><a href="{{ shop.get_absolute_url }}"><img src=" {% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %} "  alt=""></a></li>
                   </ul>
                 </div>
@@ -157,17 +161,6 @@ Shopping Page
                   <h6>{{shop.title}}</h6>
                   <a href="#" class="add-cart">+ Add To Cart</a>
                   <h5>$ {{ shop.price }}</h5>
-                  <div class="product__color__select">
-                    <label for="pc-4">
-                      <input type="radio" id="pc-4">
-                    </label>
-                    <label class="active black" for="pc-5">
-                      <input type="radio" id="pc-5">
-                    </label>
-                    <label class="grey" for="pc-6">
-                      <input type="radio" id="pc-6">
-                    </label>
-                  </div>
                 </div>
               </div>
             </div>

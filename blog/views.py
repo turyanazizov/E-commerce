@@ -1,8 +1,7 @@
 from django.shortcuts import get_object_or_404, render
-from . models import Blogs,Comments
+from . models import Blogs
 from .forms import CommentsForm
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.contrib import messages
 
 def blog(request):

@@ -5,7 +5,7 @@ class Blogs(models.Model):
     published_date=models.DateTimeField(auto_now_add=True)
     title=models.CharField(max_length=250)
     image = models.ImageField(upload_to='blogs/')
-    # Single Blog fields
+    # Blog Details fields
     content1 = models.TextField()
     content2 = models.TextField()
     quote = models.TextField()
