@@ -2,7 +2,9 @@
 	color:#e53637;
 	transition: all ease 0.3s;
 }
-
+.list-none{
+	list-style: none;
+}
 .panel-login {
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);

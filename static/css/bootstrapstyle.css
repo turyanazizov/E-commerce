@@ -1428,7 +1428,9 @@ ol {
 	padding: 10px;
 	display: inline-block;
 }
-
+.list-none{
+	list-style: none;
+}
 .product__item__text {
 	padding-top: 25px;
 	position: relative;
@@ -1858,6 +1860,9 @@ ol {
 	border-radius: 50%;
 	line-height: 30px;
 	text-align: center;
+}
+#wish {
+	background-color: #0b1f28;
 }
 
 .product__pagination a.active {

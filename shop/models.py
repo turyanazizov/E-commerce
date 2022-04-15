@@ -1,3 +1,4 @@
+from operator import truediv
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.urls import reverse_lazy
@@ -37,13 +38,13 @@ class Shops(models.Model):
     )
     title = models.CharField(max_length=250)
     image = models.ImageField(upload_to="shop/")
-    image2 = models.ImageField(upload_to="shop/")
-    image3 = models.ImageField(upload_to="shop/")
-    image4 = models.ImageField(upload_to="shop/")
+    image2 = models.ImageField(upload_to="shop/",null=True,blank=True)
+    image3 = models.ImageField(upload_to="shop/",null=True,blank=True)
+    image4 = models.ImageField(upload_to="shop/",null=True,blank=True)
     price = models.FloatField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brands, on_delete=models.CASCADE)
-    size = MultiSelectField(choices=SIZES)
+    size = MultiSelectField(choices=SIZES,null=True,blank=True)
     sale = models.BooleanField(default=False)
     brief_info = models.TextField(default='')
     description = models.TextField(default='')

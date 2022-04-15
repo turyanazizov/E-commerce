@@ -26,6 +26,7 @@ Shopping Details Page
                   </div>
                 </a>
               </li>
+              {% if shop.image2 %}
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
                   <div class="product__thumb__pic set-bg"
@@ -33,6 +34,8 @@ Shopping Details Page
                   </div>
                 </a>
               </li>
+              {% endif %}
+              {% if shop.image3 %}
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
                   <div class="product__thumb__pic set-bg"
@@ -40,14 +43,16 @@ Shopping Details Page
                   </div>
                 </a>
               </li>
+              {% endif %}
+              {% if shop.image4 %}
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
                   <div class="product__thumb__pic set-bg"
                     data-setbg=" {{shop.image4.url}} " >
-                    <i class="fa fa-play"></i>
                   </div>
                 </a>
               </li>
+              {% endif %}
             </ul>
           </div>
           <div class="col-lg-6 col-md-9">
@@ -57,21 +62,27 @@ Shopping Details Page
                   <img src=" {{shop.image.url}} "  alt="">
                 </div>
               </div>
+              {% if shop.image2 %}
               <div class="tab-pane" id="tabs-2" role="tabpanel">
                 <div class="product__details__pic__item">
                   <img src=" {{shop.image2.url}} "  alt="">
                 </div>
               </div>
+              {% endif %}
+              {% if shop.image3 %}
               <div class="tab-pane" id="tabs-3" role="tabpanel">
                 <div class="product__details__pic__item">
                   <img src=" {{shop.image3.url}} "  alt="">
                 </div>
               </div>
+              {% endif %}
+              {% if shop.image4 %}
               <div class="tab-pane" id="tabs-4" role="tabpanel">
                 <div class="product__details__pic__item">
                   <img src=" {{shop.image4.url}} "  alt="">
                 </div>
               </div>
+              {% endif %}
             </div>
           </div>
         </div>
