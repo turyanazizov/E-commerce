@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('social-auth/', include('social_django.urls', namespace='social')),
     path('admin/', admin.site.urls),
     path('', include('index.urls', namespace='index')),
     path('about/', include('about.urls', namespace='about')),

@@ -12,7 +12,7 @@ Single Blog Page
             <h2>{{ blog.title }}</h2>
             <ul>
               <li>By Deercreative</li>
-              <li>{{blog.published_date}}</li>
+              <li>{{blog.published_date|date:"d M Y H:i"}}</li>
               <li>{{comments|length}} Comments</li>
             </ul>
           </div>

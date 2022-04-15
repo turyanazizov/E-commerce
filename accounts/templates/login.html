@@ -4,6 +4,7 @@
 Login Page
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -30,7 +31,11 @@ Login Page
 											<div style="margin-top:10px" class="text-center">
 												<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
 											</div>
-											<div style="display: flex;justify-content:center;align-items:center;margin-top:10px;"><a style="text-decoration:none" href="{% url 'accounts:login' %}">No account? Create one</a></div>
+											<div style="padding: 10px 0px;" class="text-center"">
+												<a style="margin-right: 10px;" class="text-center" href="{% url 'social:begin' 'facebook' %}"><i style="font-size: 25px;" class="fa-brands fa-facebook"></i></a>
+												<a class="text-center" href="{% url 'social:begin' 'google-oauth2' %}"><i style="font-size: 25px;color:red" class="fa-brands fa-google-plus"></i></a>
+											</div>
+											<div style="display: flex;justify-content:center;align-items:center;"><a style="text-decoration:none" href="{% url 'accounts:login' %}">No account? Create one</a></div>
 											{% if messages %}
 											<ul class="messages">
 												{% for message in messages %}

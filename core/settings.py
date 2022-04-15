@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'multiselectfield',
+    'social_django',
     # my apps
     'index',
     'about',
@@ -43,6 +44,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -58,6 +61,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -65,7 +71,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
+LOGIN_REDIRECT_URL = 'index:index'
+ 
+SOCIAL_AUTH_FACEBOOK_KEY = '322743229948917'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'dd5acda142301c71334eb7b257510b75'  # App Secret
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '753994924500-p0aekgqr047eh33eipbc73bd5m90s1v5.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_friends']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email,picture',
+}
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 

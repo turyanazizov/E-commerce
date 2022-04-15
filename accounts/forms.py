@@ -8,7 +8,7 @@ class RegistrationForm(UserCreationForm):
 
     password1 = forms.CharField(
         label=('Password'),
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new password', 'class': 'form-control', 'placeholder': 'New Password'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new password', 'class': 'form-control', 'placeholder': 'Password'}),
         help_text=password_validation.password_validators_help_text_html(),
     )
 

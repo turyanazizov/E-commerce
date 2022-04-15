@@ -23,7 +23,7 @@ Blog Page
           <div class="blog__item">
             <div class="blog__item__pic set-bg" data-setbg=" {{ blog.image.url }} " ></div>
             <div class="blog__item__text">
-              <span><img src=" {% static 'img/icon/xcalendar.png.pagespeed.ic.GXy2gYWDh7.png' %} "  alt=""> {{ blog.published_date }}</span>
+              <span><img src=" {% static 'img/icon/xcalendar.png.pagespeed.ic.GXy2gYWDh7.png' %} "  alt=""> {{ blog.published_date|date:"d F Y" }}</span>
               <h5>{{ blog.title }}</h5>
               <a href="{{ blog.get_absolute_url }}">Read More</a>
             </div>
