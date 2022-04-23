@@ -14,7 +14,6 @@ def blog(request):
 def blog_detail(request,slug):
     blog = get_object_or_404(Blogs, slug=slug)
     comments = Blogs.objects.all().filter(slug=slug).first().comments.filter(status='Approve')
-
     form = CommentsForm()
     if request.method == "POST":
         blog_field=Blogs.objects.all().filter(slug=slug).first()
@@ -25,11 +24,9 @@ def blog_detail(request,slug):
             form.save()
             messages.info(request, 'Your comment has been sended!')
             return redirect('blog:blog_detail' , slug=blog.slug)
-    
     context = {
         'blog': blog,
         'comments': comments,
         'form':form,
     }
-
     return render(request,'blog-details.html',context=context)

@@ -4,6 +4,11 @@ from .models import Shops,Categories,Brands
 @admin.register(Shops)
 class ShopsAdmin(admin.ModelAdmin):
     readonly_fields = ('slug',)
-    
+    list_display = ('category', 'title')
+    list_display_links = list_display
+    list_filter = ('category', 'brand')
+
+
 admin.site.register(Categories)
+
 admin.site.register(Brands)

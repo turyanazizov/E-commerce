@@ -1,14 +1,17 @@
+from unicodedata import category
 from django.shortcuts import get_object_or_404, render
 from .models import Shops,Categories,Brands
 import math
+from django.db.models import Q 
 
 def shop(request):
+    # Pagination
     page=request.GET.get('page')
     if page:
         page=int(page)
     else:
         page = 1
-    per_count=9
+    per_count=3
     all_shops=Shops.objects.all().count()
     total_page_count = math.ceil( all_shops / per_count )
     shops=Shops.objects.all()[per_count*(page-1):(page*per_count)]
@@ -23,27 +26,43 @@ def shop(request):
     if to>all_shops:
         to=all_shops
 
-    # shops=Shops.objects.all()
     categories=Categories.objects.all()
     brands=Brands.objects.all()
     shop_id=request.POST.get('shop_id')
-
+    # Search for CATEGORY
     cat_id=request.GET.get('categories')
+    print(cat_id,'cat-id')
     if cat_id:
-        shops=Shops.objects.all().filter(category=cat_id)
+        print('Salam')
+        cat_id=int(cat_id)
+        shops=Shops.objects.filter(category=cat_id)[per_count*(page-1):(page*per_count)]
+        all_shops=Shops.objects.filter(category=cat_id).count()
+        total_page_count = math.ceil( all_shops / per_count )
+        page_range = range(1, total_page_count + 1)
+        print(shops,'++++++++')     
+    # Search for BRAND
     brand_id=request.GET.get('brands')
     if brand_id:
-        shops=Shops.objects.all().filter(brand=brand_id)
-    
+        brand_id=int(brand_id)
+        shops=Shops.objects.filter(brand=brand_id)[per_count*(page-1):(page*per_count)]
+        all_shops=Shops.objects.filter(brand=brand_id).count()
+        total_page_count = math.ceil( all_shops / per_count )
+        page_range = range(1, total_page_count + 1)
+    # Search for PRICE
     price=request.GET.get('price')
     if price:
         values_str=price.split('-')
         values=[]
         for value in values_str:
             values.append(int(value))
-        shops=Shops.objects.all().filter(price__gte=values[0]).filter(price__lte=values[1])
-# Problem : Filter edende Pagination-da 2,3 ve s. sehifelere tesir etmir..... 
+        shops=Shops.objects.all().filter(price__gte=values[0]).filter(price__lte=values[1])[per_count*(page-1):(page*per_count)]
+        all_shops=Shops.objects.all().filter(price__gte=values[0]).filter(price__lte=values[1]).count()
+        total_page_count = math.ceil( all_shops / per_count )
+        page_range = range(1, total_page_count + 1)
+    if cat_id:
+        cat_id=Categories.objects.filter(id=int(cat_id))
     context={
+        'cat_id':cat_id,
         'frm':frm,
         'all_shops':all_shops,
         'to':to,
@@ -63,6 +82,39 @@ def shop(request):
         response.set_cookie('liked_shops', liked_shops.replace(shop_id,''))
     return response
 
+def search(request):
+    if request.method=='POST':
+        search=request.POST.get('search')
+        if search:
+            shops=Shops.objects.all().filter( Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search))
+    categories=Categories.objects.all()
+    brands=Brands.objects.all()
+    
+    context={
+        'shops':shops,
+        'categories':categories,
+        'brands':brands,
+    }    
+    return render(request,'shop.html',context=context)
+
+def order(request):
+    shops=Shops.objects.all()
+    order=request.GET.get('order')
+    if order=='l2h':
+        shops=Shops.objects.all().order_by('price')
+    if order=='h2l':
+        shops=Shops.objects.all().order_by('-price')
+    if order=='os':
+        shops=Shops.objects.all().filter(sale=True)
+    categories=Categories.objects.all()
+    brands=Brands.objects.all()
+    context={
+        'shops':shops,
+        'categories':categories,
+        'brands':brands,
+    }    
+    return render(request,'shop.html',context=context)
+
 def shop_detail(request,slug):
     shop = get_object_or_404(Shops, slug=slug)
     shops=Shops.objects.all().filter(category=shop.category).exclude(title=shop.title)
@@ -72,14 +124,7 @@ def shop_detail(request,slug):
     }
     return render(request,'shop-details.html',context=context)
 
-def checkout(request):
-    return render(request,'checkout.html')
-
-def cart(request):
-    return render(request,'shopping-cart.html')
-
 def wishlist(request):
-
     liked_shops=request.COOKIES.get('liked_shops','')
     shop_id=request.POST.get('shop_id')
     l_shops=liked_shops.split(' ')
@@ -105,3 +150,10 @@ def wishlist(request):
         response.set_cookie('liked_shops', liked_shops.replace(shop_id,''))
         return response
     return response
+
+
+def checkout(request):
+    return render(request,'checkout.html')
+
+def cart(request):
+    return render(request,'shopping-cart.html')
