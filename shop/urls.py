@@ -1,5 +1,5 @@
 from django.urls import path
-from shop.views import order, search, shop,checkout,cart,shop_detail,wishlist
+from shop.views import order, search,checkout,cart,shop_detail,wishlist,shop,ShopDeleteView
 
 app_name = 'shop'
 
@@ -11,4 +11,6 @@ urlpatterns = [
     path('wishlist/', wishlist, name='wishlist'),
     path('search/', search, name='search'),
     path('order/', order, name='order'),
+    path('delete/<int:pk>', ShopDeleteView.as_view(),name='delete'),
+    
 ]

@@ -1,8 +1,25 @@
-from unicodedata import category
-from django.shortcuts import get_object_or_404, render
+from audioop import reverse
+from multiprocessing import context
+from unittest import mock
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from .models import Shops,Categories,Brands
 import math
 from django.db.models import Q 
+from django.views.generic import ListView
+from django.views.generic.edit import DeleteView
+
+class ShopDeleteView(DeleteView):
+    # specify the model you want to use
+    model = Shops
+    success_url = reverse_lazy('shop:shop')
+    template_name = 'single.html'
+
+# class ShopListView(ListView):
+#     model = Shops
+#     template_name = 'shop.html'
+#     paginate_by = 6 
+#     context_object_name = 'shops'
 
 def shop(request):
     # Pagination
@@ -31,15 +48,12 @@ def shop(request):
     shop_id=request.POST.get('shop_id')
     # Search for CATEGORY
     cat_id=request.GET.get('categories')
-    print(cat_id,'cat-id')
     if cat_id:
-        print('Salam')
         cat_id=int(cat_id)
         shops=Shops.objects.filter(category=cat_id)[per_count*(page-1):(page*per_count)]
         all_shops=Shops.objects.filter(category=cat_id).count()
         total_page_count = math.ceil( all_shops / per_count )
         page_range = range(1, total_page_count + 1)
-        print(shops,'++++++++')     
     # Search for BRAND
     brand_id=request.GET.get('brands')
     if brand_id:
@@ -59,9 +73,10 @@ def shop(request):
         all_shops=Shops.objects.all().filter(price__gte=values[0]).filter(price__lte=values[1]).count()
         total_page_count = math.ceil( all_shops / per_count )
         page_range = range(1, total_page_count + 1)
-    if cat_id:
-        cat_id=Categories.objects.filter(id=int(cat_id))
+    
     context={
+        'total_page_count':total_page_count,
+        'brand_id':brand_id,
         'cat_id':cat_id,
         'frm':frm,
         'all_shops':all_shops,
@@ -89,7 +104,7 @@ def search(request):
             shops=Shops.objects.all().filter( Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search))
     categories=Categories.objects.all()
     brands=Brands.objects.all()
-    
+
     context={
         'shops':shops,
         'categories':categories,
