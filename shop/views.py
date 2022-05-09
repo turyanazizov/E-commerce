@@ -7,16 +7,9 @@ from django.views.generic import ListView
 from django.views.generic.edit import DeleteView
 
 class ShopDeleteView(DeleteView):
-    # specify the model you want to use
     model = Shops
     success_url = reverse_lazy('shop:shop')
     template_name = 'single.html'
-
-# class ShopListView(ListView):
-#     model = Shops
-#     template_name = 'shop.html'
-#     paginate_by = 6 
-#     context_object_name = 'shops'
 
 def shop(request):
     # Pagination
@@ -81,7 +74,16 @@ def shop(request):
         all_shops=Shops.objects.all().filter(sale=True).count()
         total_page_count = math.ceil( all_shops / per_count )
         page_range = range(1, total_page_count + 1)
+    # Search manual
+    search=request.GET.get('search')
+    if search:
+        shops=Shops.objects.all().filter( Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search))[per_count*(page-1):(page*per_count)]
+        all_shops=Shops.objects.all().filter(Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search)).count()
+        total_page_count = math.ceil( all_shops / per_count )
+        page_range = range(1, total_page_count + 1)
+    
     context={
+        'search':search,
         'order':order,
         'total_page_count':total_page_count,
         'brand_id':brand_id,
@@ -105,40 +107,6 @@ def shop(request):
     elif request.method =='POST' and shop_id in liked_shops:
         response.set_cookie('liked_shops', liked_shops.replace(shop_id,''))
     return response
-
-def search(request):
-    if request.method=='POST':
-        search=request.POST.get('search')
-        if search:
-            shops=Shops.objects.all().filter( Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search))
-    categories=Categories.objects.all()
-    brands=Brands.objects.all()
-
-    context={
-        'shops':shops,
-        'categories':categories,
-        'brands':brands,
-    }    
-    return render(request,'shop.html',context=context)
-
-# def order(request):
-#     shops=Shops.objects.all()
-#     order=request.GET.get('order')
-#     if order=='l2h':
-#         shops=Shops.objects.all().order_by('price')
-#     if order=='h2l':
-#         shops=Shops.objects.all().order_by('-price')
-#     if order=='os':
-#         shops=Shops.objects.all().filter(sale=True)
-#     categories=Categories.objects.all()
-#     brands=Brands.objects.all()
-#     context={
-#         "order":order,
-#         'shops':shops,
-#         'categories':categories,
-#         'brands':brands,
-#     }    
-#     return render(request,'shop.html',context=context)
 
 def shop_detail(request,slug):
     shop = get_object_or_404(Shops, slug=slug)

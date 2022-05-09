@@ -26,8 +26,7 @@ Shopping Page
         <div class="col-lg-3">
           <div class="shop__sidebar">
             <div class="shop__sidebar__search">
-              <form method="post" action="{% url 'shop:search' %}">
-                {% csrf_token %}
+              <form method="get">
                 <input type="text" placeholder="Search..." name="search">
                 <button type="submit"><span class="icon_search"></span></button>
               </form>
@@ -186,45 +185,48 @@ Shopping Page
                     <a href="/shop/?price={{price}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% elif order %}
                     <a href="/shop/?order={{order}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
+                  {% elif search %}
+                    <a href="/shop/?search={{search}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% else %}
                     <a href="?page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% endif %}
                 {% endif %}
 
-            {% for page in page_range %}
-                {% if page is current_page %}
-                    <a class="active">{{page}}</a>
-                {% else %}
-                  {% if cat_id %}
-                    <a href="/shop/?categories={{cat_id}}&page={{page}}">{{page}}</a>
-                  
-                  {% elif brand_id %}
-                    <a href="/shop/?brands={{brand_id}}&page={{page}}">{{page}}</a>
-
-                  {% elif price %}
-                    <a href="/shop/?price={{price}}&page={{page}}">{{page}}</a>
-                  {% elif order %}
-                    <a href="/shop/?order={{order}}&page={{page}}">{{page}}</a>
-                    
+                {% for page in page_range %}
+                  {% if page is current_page %}
+                      <a class="active">{{page}}</a>
                   {% else %}
-                    <a href="?page={{page}}">{{page}}</a>
+                    {% if cat_id %}
+                      <a href="/shop/?categories={{cat_id}}&page={{page}}">{{page}}</a>
+                    {% elif brand_id %}
+                      <a href="/shop/?brands={{brand_id}}&page={{page}}">{{page}}</a>
+                    {% elif price %}
+                      <a href="/shop/?price={{price}}&page={{page}}">{{page}}</a>
+                    {% elif order %}
+                      <a href="/shop/?order={{order}}&page={{page}}">{{page}}</a>
+                    {% elif search %}
+                      <a href="/shop/?search={{search}}&page={{page}}">{{page}}</a>
+                    {% else %}
+                      <a href="?page={{page}}">{{page}}</a>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if current_page != total_page_count %}
+                  {% if cat_id %}
+                  <a href="/shop/?categories={{cat_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                  {% elif brand_id %}
+                    <a href="/shop/?brands={{brand_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                  {% elif price %}
+                    <a href="/shop/?price={{price}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                  {% elif order %}
+                    <a href="/shop/?order={{order}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                  {% elif search %}
+                    <a href="/shop/?search={{search}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                  {% else %}
+                    <a href="?page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
                   {% endif %}
                 {% endif %}
-            {% endfor %}
-
-            {% if current_page != total_page_count %}
-              {% if cat_id %}
-               <a href="/shop/?categories={{cat_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
-              {% elif brand_id %}
-                <a href="/shop/?brands={{brand_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
-              {% elif price %}
-                <a href="/shop/?price={{price}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
-                {% elif order %}
-                <a href="/shop/?order={{order}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
-              {% else %}
-                <a href="?page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
-              {% endif %}
-            {% endif %}
 
               </div>
             </div>
