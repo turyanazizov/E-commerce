@@ -6,7 +6,7 @@ class ShopsAdmin(admin.ModelAdmin):
     readonly_fields = ('slug',)
     list_display = ('category', 'title')
     list_display_links = list_display
-    list_filter = ('category', 'brand')
+    list_filter = ('category', 'brand','price')
 
 
 admin.site.register(Categories)

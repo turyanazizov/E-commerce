@@ -1,6 +1,3 @@
-from audioop import reverse
-from multiprocessing import context
-from unittest import mock
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from .models import Shops,Categories,Brands
@@ -78,6 +75,7 @@ def shop(request):
         'total_page_count':total_page_count,
         'brand_id':brand_id,
         'cat_id':cat_id,
+        'price':price,
         'frm':frm,
         'all_shops':all_shops,
         'to':to,

@@ -74,12 +74,12 @@ Shopping Page
                     <div class="card-body">
                       <div class="shop__sidebar__categories">
                         <ul class="nice-scroll">
-                          <li><a href="/shop/?price=0-50">$0.00 - $50.00</a></li>
-                          <li><a href="/shop/?price=50-100">$50.00 - $100.00</a></li>
-                          <li><a href="/shop/?price=100-150">$100.00 - $150.00</a></li>
-                          <li><a href="/shop/?price=150-200">$150.00 - $200.00</a></li>
-                          <li><a href="/shop/?price=200-250">$200.00 - $250.00</a></li>
-                          <li><a href="/shop/?price=250-10000">$250.00+</a></li>
+                          <li><a href="/shop/?price=0-50&page=1">$0.00 - $50.00</a></li>
+                          <li><a href="/shop/?price=50-100&page=1">$50.00 - $100.00</a></li>
+                          <li><a href="/shop/?price=100-150&page=1">$100.00 - $150.00</a></li>
+                          <li><a href="/shop/?price=150-200&page=1">$150.00 - $200.00</a></li>
+                          <li><a href="/shop/?price=200-250&page=1">$200.00 - $250.00</a></li>
+                          <li><a href="/shop/?price=250-10000&page=1">$250.00+</a></li>
                         </ul>
                       </div>
                     </div>
@@ -185,6 +185,8 @@ Shopping Page
                     <a href="/shop/?categories={{cat_id}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% elif brand_id %}
                     <a href="/shop/?brands={{brand_id}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
+                  {% elif price %}
+                    <a href="/shop/?price={{price}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% else %}
                     <a href="?page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% endif %}
@@ -199,7 +201,11 @@ Shopping Page
                   
                   {% elif brand_id %}
                     <a href="/shop/?brands={{brand_id}}&page={{page}}">{{page}}</a>
-                  {% else %}
+
+                  {% elif price %}
+                    <a href="/shop/?price={{price}}&page={{page}}">{{page}}</a>
+                  
+                    {% else %}
                     <a href="?page={{page}}">{{page}}</a>
                   {% endif %}
                 {% endif %}
@@ -210,6 +216,8 @@ Shopping Page
                <a href="/shop/?categories={{cat_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% elif brand_id %}
                 <a href="/shop/?brands={{brand_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+              {% elif price %}
+                <a href="/shop/?price={{price}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% else %}
                 <a href="?page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% endif %}
