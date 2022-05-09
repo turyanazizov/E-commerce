@@ -9,7 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('index.urls', namespace='index')),
     path('contact/', include('contact.urls', namespace='contact')),
-    path('blog/', include('blog.urls', namespace='blog')),
     path('account/', include('accounts.urls', namespace='accounts')),
     path('shop/', include('shop.urls', namespace='shop')),
     path('rosetta/', include('rosetta.urls')), 
@@ -17,4 +16,5 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('about/', include('about.urls', namespace='about')),
+    path('blog/', include('blog.urls', namespace='blog')),
 )
