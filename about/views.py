@@ -1,9 +1,4 @@
-from django.shortcuts import render
-from .models import About
+from django.views.generic import TemplateView
 
-def about(request):
-    about=About.objects.all().first()
-    context={
-        'about':about,
-    }
-    return render(request,'about.html',context=context)
+class AboutView(TemplateView):
+    template_name='about.html'
