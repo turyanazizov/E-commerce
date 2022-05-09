@@ -1,15 +1,16 @@
+from re import template
 from django.shortcuts import get_object_or_404, render
 from . models import Blogs
 from .forms import CommentsForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.generic import ListView,DetailView
 
-def blog(request):
-    blogs=Blogs.objects.all()
-    context = {
-        'blogs': blogs,
-    }
-    return render(request,'blog.html',context=context)
+class BlogListView(ListView):
+    template_name = 'blog.html'
+    model = Blogs
+    paginate_by = 3
+    context_object_name = 'blogs'
 
 def blog_detail(request,slug):
     blog = get_object_or_404(Blogs, slug=slug)
