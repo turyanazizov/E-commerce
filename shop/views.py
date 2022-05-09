@@ -70,8 +70,19 @@ def shop(request):
         all_shops=Shops.objects.all().filter(price__gte=values[0]).filter(price__lte=values[1]).count()
         total_page_count = math.ceil( all_shops / per_count )
         page_range = range(1, total_page_count + 1)
-    
+    # Search for ORDER 
+    order=request.GET.get('order')
+    if order=='l2h':
+        shops=Shops.objects.all().order_by('price')[per_count*(page-1):(page*per_count)]
+    if order=='h2l':
+        shops=Shops.objects.all().order_by('-price')[per_count*(page-1):(page*per_count)]
+    if order=='os':
+        shops=Shops.objects.all().filter(sale=True)[per_count*(page-1):(page*per_count)]
+        all_shops=Shops.objects.all().filter(sale=True).count()
+        total_page_count = math.ceil( all_shops / per_count )
+        page_range = range(1, total_page_count + 1)
     context={
+        'order':order,
         'total_page_count':total_page_count,
         'brand_id':brand_id,
         'cat_id':cat_id,
@@ -110,23 +121,24 @@ def search(request):
     }    
     return render(request,'shop.html',context=context)
 
-def order(request):
-    shops=Shops.objects.all()
-    order=request.GET.get('order')
-    if order=='l2h':
-        shops=Shops.objects.all().order_by('price')
-    if order=='h2l':
-        shops=Shops.objects.all().order_by('-price')
-    if order=='os':
-        shops=Shops.objects.all().filter(sale=True)
-    categories=Categories.objects.all()
-    brands=Brands.objects.all()
-    context={
-        'shops':shops,
-        'categories':categories,
-        'brands':brands,
-    }    
-    return render(request,'shop.html',context=context)
+# def order(request):
+#     shops=Shops.objects.all()
+#     order=request.GET.get('order')
+#     if order=='l2h':
+#         shops=Shops.objects.all().order_by('price')
+#     if order=='h2l':
+#         shops=Shops.objects.all().order_by('-price')
+#     if order=='os':
+#         shops=Shops.objects.all().filter(sale=True)
+#     categories=Categories.objects.all()
+#     brands=Brands.objects.all()
+#     context={
+#         "order":order,
+#         'shops':shops,
+#         'categories':categories,
+#         'brands':brands,
+#     }    
+#     return render(request,'shop.html',context=context)
 
 def shop_detail(request,slug):
     shop = get_object_or_404(Shops, slug=slug)

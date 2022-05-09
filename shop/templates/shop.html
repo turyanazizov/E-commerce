@@ -134,15 +134,12 @@ Shopping Page
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="shop__product__option__right">
-                  <form action="{% url 'shop:order' %}" method="get">
-                    <p>Sort by Price:</p>
-                    <select name="order">
-                      <option value="l2h">Low To High</option>
-                      <option value="h2l">High To Low</option>
-                      <option value="os">Only Sale</option> 
+                    <label>Sort by Price:</label>
+                    <select onchange="location = this.value;">
+                      <option value="/shop/?order=l2h&page=1">Low To High</option>
+                      <option value="/shop/?order=h2l&page=1">High To Low</option>
+                      <option value="/shop/?order=os&page=1">Only Sale</option>
                     </select>
-                    <button style="background-color: white;" type="submit">Select</button>
-                  </form>
                 </div>
               </div>
             </div>
@@ -187,6 +184,8 @@ Shopping Page
                     <a href="/shop/?brands={{brand_id}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% elif price %}
                     <a href="/shop/?price={{price}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
+                  {% elif order %}
+                    <a href="/shop/?order={{order}}&page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% else %}
                     <a href="?page={{previous_page}}"><i class="fa-solid fa-arrow-left-long"></i></a>
                   {% endif %}
@@ -204,8 +203,10 @@ Shopping Page
 
                   {% elif price %}
                     <a href="/shop/?price={{price}}&page={{page}}">{{page}}</a>
-                  
-                    {% else %}
+                  {% elif order %}
+                    <a href="/shop/?order={{order}}&page={{page}}">{{page}}</a>
+                    
+                  {% else %}
                     <a href="?page={{page}}">{{page}}</a>
                   {% endif %}
                 {% endif %}
@@ -218,6 +219,8 @@ Shopping Page
                 <a href="/shop/?brands={{brand_id}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% elif price %}
                 <a href="/shop/?price={{price}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
+                {% elif order %}
+                <a href="/shop/?order={{order}}&page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% else %}
                 <a href="?page={{next_page}}"><i class="fa-solid fa-right-long"></i></a>
               {% endif %}
