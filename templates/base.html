@@ -41,6 +41,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrapstyle.css' %} " type="text/css" />
     <link rel="stylesheet" href="{% static 'css/default.css' %}" type="text/css" />
+
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+        
+        function getToken(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+        var csrftoken = getToken('csrftoken')
+    </script>
+    
 </head>
 </head>
 

@@ -18,8 +18,8 @@
       <div class="offcanvas__nav__option">
         <a href="#" class="search-switch"><img src="{% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %}" alt=""></a>
         <a href="{% url 'shop:wishlist' %}"><img src="{% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %}" alt=""></a>
-        <a href="{% url 'shop:cart' %}"><img src="{% static 'img/icon/xcart.png.pagespeed.ic.bfUgeYGK3w.png' %}" alt=""> <span>0</span></a>
-        <div class="price">$0.00</div>
+        <a href="{% url 'shop:cart' %}"><img style="width: 23px;height: 20px;" src="{% static 'img/icon/xcart.png.pagespeed.ic.bfUgeYGK3w.png' %}"> <span style="color:red;font-weight:bold;">{{orderr.get_cart_items}}</span></a>
+        <div class="price">$ {{orderr.get_cart_total|floatformat:2}}</div>
       </div>
       <div id="mobile-menu-wrap"></div>
       <div class="offcanvas__text">
@@ -74,8 +74,13 @@
             <div class="header__nav__option">
               <a href="#" class="search-switch"><img src="{% static 'img/icon/xsearch.png.pagespeed.ic.y-8fLDHdJm.png' %}" alt=""></a>
               <a href="{% url 'shop:wishlist' %}"><img src="{% static 'img/icon/xheart.png.pagespeed.ic.eX6BmaqN_X.png' %}" alt=""></a>
-              <a href="{% url 'shop:cart' %}"><img src="{% static 'img/icon/xcart.png.pagespeed.ic.bfUgeYGK3w.png' %}" alt=""> <span>0</span></a>
-              <div class="price">$0.00</div>
+              <a href="{% url 'shop:cart' %}">
+                <div>
+                  <img style="width: 23px;height: 20px;"  src="{% static 'img/icon/xcart.png.pagespeed.ic.bfUgeYGK3w.png' %}"> 
+                  <span style="color:red;font-weight:bold;">{{orderr.get_cart_items}}</span>
+                </div>
+              </a>
+              <div class="price">$ {{orderr.get_cart_total|floatformat:2}}</div>
             </div>
           </div>
         </div>

@@ -1,16 +1,10 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
-from .models import Shops,Categories,Brands
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from .models import Shops,Categories,Brands,Order,OrderItem
 import math
-from django.db.models import Q 
-from django.views.generic import ListView
-from django.views.generic.edit import DeleteView
-
-class ShopDeleteView(DeleteView):
-    model = Shops
-    success_url = reverse_lazy('shop:shop')
-    template_name = 'single.html'
-
+from django.db.models import Q
+from django.http import  HttpResponse, HttpResponseRedirect, JsonResponse
+import json
 def shop(request):
     # Pagination
     page=request.GET.get('page')
@@ -81,7 +75,8 @@ def shop(request):
         all_shops=Shops.objects.all().filter(Q(title__icontains=search) | Q(category__category__icontains=search) | Q(brand__brand__icontains=search)).count()
         total_page_count = math.ceil( all_shops / per_count )
         page_range = range(1, total_page_count + 1)
-    
+
+
     context={
         'search':search,
         'order':order,
@@ -107,6 +102,7 @@ def shop(request):
     elif request.method =='POST' and shop_id in liked_shops:
         response.set_cookie('liked_shops', liked_shops.replace(shop_id,''))
     return response
+
 
 def shop_detail(request,slug):
     shop = get_object_or_404(Shops, slug=slug)
@@ -144,9 +140,55 @@ def wishlist(request):
         return response
     return response
 
-
 def checkout(request):
-    return render(request,'checkout.html')
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        context = {'items':items, 'order':order}
+        return render(request, 'checkout.html', context)
+    else:
+		#Create empty cart for now for non-logged in user
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+        context = {'items':items, 'order':order}
+        return HttpResponseRedirect( '/account/login/')
+
+def updateItem(request):
+    data = json.loads(request.body)
+    shopId = data['shopId']
+    action = data['action']
+    print('Action:', action)
+    print('Product:', shopId)
+	
+    customer = request.user
+    product = Shops.objects.get(id=shopId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order,product=product)
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+    elif action == 'delete':
+        orderItem.quantity = 0
+    
+    orderItem.save()
+    
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+    
+    return JsonResponse('Item was added', safe=False)
 
 def cart(request):
-    return render(request,'shopping-cart.html')
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        context = {'items':items, 'order':order}
+        return render(request, 'shopping-cart.html', context)
+    else:
+		#Create empty cart for now for non-logged in user
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+        context = {'items':items, 'order':order}
+        return HttpResponseRedirect( '/account/login/')

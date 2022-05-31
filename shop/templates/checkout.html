@@ -11,8 +11,8 @@ Checkout Page
           <div class="breadcrumb__text">
             <h4>Check Out</h4>
             <div class="breadcrumb__links">
-              <a href="index.html">Home</a>
-              <a href="shop.html">Shop</a>
+              <a href="{% url 'index:index' %}">Home</a>
+              <a href="{% url 'shop:shop' %}">Shop</a>
               <span>Check Out</span>
             </div>
           </div>
@@ -109,14 +109,12 @@ Checkout Page
                 <h4 class="order__title">Your order</h4>
                 <div class="checkout__order__products">Product <span>Total</span></div>
                 <ul class="checkout__total__products">
-                  <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                  <li>02. German chocolate <span>$ 170.0</span></li>
-                  <li>03. Sweet autumn <span>$ 170.0</span></li>
-                  <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                  {% for item in items %}
+                  <li></span>{{item.product.title}} <span>$ {{item.get_total|floatformat:2}}</span></li>
+                  {% endfor %}
                 </ul>
                 <ul class="checkout__total__all">
-                  <li>Subtotal <span>$750.99</span></li>
-                  <li>Total <span>$750.99</span></li>
+                  <li>Total <span>$ {{order.get_cart_total|floatformat:2}}</span></li>
                 </ul>
                 <div class="checkout__input__checkbox">
                   <label for="acc-or">
